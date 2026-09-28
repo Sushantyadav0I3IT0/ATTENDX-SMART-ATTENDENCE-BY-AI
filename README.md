@@ -1,38 +1,61 @@
 # AttendX — Smart Attendance by AI
 
-> An AI-powered attendance system that helps teachers and students manage attendance quickly using **face recognition** and **voice recognition**.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit" />
+  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/AI-Face%20%2B%20Voice-8A2BE2?style=for-the-badge" alt="AI Face + Voice" />
+</p>
+
+> An AI-powered attendance system that helps teachers and students manage classroom attendance faster, smarter, and more securely using face recognition and voice recognition.
 
 ## ✨ Overview
 
-AttendX is a Python and Streamlit application designed to make classroom attendance faster, simpler, and more secure.
+AttendX is a modern Python + Streamlit application designed to make classroom attendance simpler, quicker, and more secure for both teachers and students.
 
-### What it provides
+### What AttendX provides
 
-- 👨‍🏫 **Teacher dashboard** for managing classes and subjects
-- 👨‍🎓 **Student experience** for joining subjects and viewing attendance
-- 📸 **Face-based attendance** using face recognition
-- 🎙️ **Voice-based attendance** using voice recognition
-- 🔗 **Join codes** for quick student enrollment
-- 🧑‍💻 **Student enrollment** with photo and voice data
-- 📊 **Attendance results** for reviewing attendance records
+- 👨‍🏫 **Teacher dashboard** for managing classes, subjects, and attendance records
+- 👨‍🎓 **Student portal** for joining classes and viewing attendance
+- 📸 **Face-based attendance** using AI recognition
+- 🎙️ **Voice-based attendance** using speech recognition
+- 🔗 **Join codes** for quick student access and enrollment
+- 🧑‍💻 **Enrollment workflow** with student photo and voice data
+- 📊 **Attendance summaries** and result tracking
 - 🔐 **Secure authentication** with password hashing
-- 🗄️ **Cloud data storage** with Supabase
-- 📱 **QR code generation** for sharing subject access
+- ☁️ **Cloud-backed storage** with Supabase
+- 📱 **QR code generation** for subject access sharing
 
-## 🛠️ Main Tech Stack
+---
+
+## 🚀 Why this project stands out
+
+AttendX brings together AI, automation, and education in one lightweight platform:
+
+- Fast attendance marking without long manual roll calls
+- Secure biometric-based recognition for better verification
+- Easy onboarding for teachers and students
+- Cloud-first architecture for smooth data management
+- Scalable design for future academic features
+
+---
+
+## 🛠️ Tech Stack
 
 | Area | Technology / Tool |
 | --- | --- |
-| **Language** | Python |
-| **Web app framework** | Streamlit |
-| **Face recognition** | `face_recognition_models`, `dlib-bin`, `scikit-learn` |
-| **Voice recognition** | `librosa`, `resemblyzer` |
-| **Data processing** | NumPy, Pandas |
-| **Database / backend** | Supabase |
-| **Authentication** | bcrypt |
-| **QR codes** | Segno |
-| **Image processing** | Pillow |
-| **Project structure** | Modular Python components, screens, and pipelines |
+| Language | Python |
+| Web app framework | Streamlit |
+| Face recognition | `face_recognition_models`, `dlib-bin`, `scikit-learn` |
+| Voice recognition | `librosa`, `resemblyzer` |
+| Data processing | NumPy, Pandas |
+| Database / backend | Supabase |
+| Authentication | bcrypt |
+| QR codes | Segno |
+| Image processing | Pillow |
+| Architecture | Modular Python components, screens, and AI pipelines |
+
+---
 
 ## 📁 Project Structure
 
@@ -40,13 +63,26 @@ AttendX is a Python and Streamlit application designed to make classroom attenda
 .
 ├── app.py                    # Streamlit application entry point
 ├── requirements.txt          # Python dependencies
+├── README.md                 # Project documentation
 └── src/
     ├── Components/           # Reusable UI dialogs and components
     ├── Ui/                   # UI helpers and styling
     ├── database/             # Database integration
     ├── pipelines/            # Face and voice recognition pipelines
-    └── screens/              # Home, teacher, and student screens
+    └── screens/              # Teacher and student screens
 ```
+
+---
+
+## 🔄 How It Works
+
+1. A teacher creates a subject or class.
+2. Students join using a subject code or QR code.
+3. Students enroll their required photo and voice data.
+4. AttendX identifies students using AI-based face or voice recognition.
+5. Attendance is stored and displayed for review.
+
+---
 
 ## 🚀 Getting Started
 
@@ -66,7 +102,7 @@ python -m venv venv
 **Windows:**
 
 ```bash
-venv\\Scripts\\activate
+venv\Scripts\activate
 ```
 
 **macOS / Linux:**
@@ -84,41 +120,46 @@ pip install -r requirements.txt
 ### 4. Configure the database
 
 - Create a Supabase project.
-- Add the required Supabase configuration to the project using environment variables or the configuration method used by the database module.
-- Keep credentials private and do not commit secrets to GitHub.
+- Add your Supabase credentials using environment variables or the project configuration method used by the database module.
+- Keep secrets private and never commit them to GitHub.
 
-### 5. Run the application
+### 5. Run the app
 
 ```bash
 streamlit run app.py
 ```
 
-The application will open in your browser at the local Streamlit URL.
+The app will open in your browser at the local Streamlit URL.
 
-## 🔄 How It Works
-
-1. A teacher creates a subject or class.
-2. Students join using a subject code or QR code.
-3. Students enroll their required photo and voice information.
-4. AttendX uses AI pipelines to identify students through their face or voice.
-5. Attendance results are stored and displayed for review.
+---
 
 ## 🔒 Security Notes
 
 - Use environment variables for Supabase URLs, keys, and other secrets.
 - Never commit passwords, API keys, or private credentials.
-- Use this system only with appropriate user consent for biometric data collection.
+- Handle biometric data responsibly and only with proper consent.
+- Keep access control in place for teacher and student roles.
+
+---
 
 ## 🤝 Contributing
 
 Contributions are welcome. To contribute:
 
-- Fork the repository.
-- Create a feature branch.
-- Make your changes.
-- Test the application locally.
-- Open a pull request with a clear description.
+- Fork the repository
+- Create a feature branch
+- Make your changes
+- Test locally
+- Open a pull request with a clear description
+
+---
 
 ## 📄 License
 
-No license has been specified yet. Add a license file if you plan to distribute or accept external contributions.
+No license has been specified yet. If you plan to share or distribute this project publicly, add a proper license file.
+
+---
+
+<p align="center">
+  <strong>Built for smarter classrooms 💡</strong>
+</p>
