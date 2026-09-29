@@ -4,8 +4,8 @@ import io
 
 @st.dialog("Share Class Link")
 def share_subject_dialog(subject_name, subject_code):
-    app_domain = "AttendX-main.streamlit.app"
-    join_url = f"{app_domain}/?join-code={subject_code}"
+    app_url = "https://attendx-main.streamlit.app"
+    join_url = f"{app_url}/?join-code={subject_code}"
 
     st.header("Scan to Join")
 
@@ -19,6 +19,7 @@ def share_subject_dialog(subject_name, subject_code):
 
     with col1:
         st.markdown('### Copy Link')
+        st.link_button("Open enrollment link", join_url, width="stretch")
         st.code(join_url, language="text")
         st.code(subject_code, language="text")
         st.info('Copy this link to share on Whatsapp or Email')
