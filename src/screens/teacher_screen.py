@@ -254,10 +254,11 @@ def teacher_tab_attendance_records():
         ts = r.get('timestamp')
 
         data.append({
-            "ts_group": ts.split(".")[0] if ts else None,
+            "ts_group": ts,
             "Time": datetime.fromisoformat(ts).strftime("%Y-%m-%d %I:%M %p") if ts else "N'A",
             "Subject": r['subjects']['name'],
             "Subject Code":r['subjects']['subject_code'],
+            "Student": r.get('students', {}).get('name', f"Student {r.get('student_id', '')}"),
             "is_present": bool(r.get('is_present', False))
         })
 
@@ -285,6 +286,29 @@ def teacher_tab_attendance_records():
                   )
     
     st.dataframe(display_df, width='stretch', hide_index=True)
+
+    st.subheader("Students in a class")
+    session_options = {
+        f"{row['Time']} · {row['Subject']} ({row['Subject Code']})": row['ts_group']
+        for _, row in summary.sort_values(by='ts_group', ascending=False).iterrows()
+    }
+
+    if session_options:
+        selected_session_label = st.selectbox(
+            "Choose a class session",
+            options=list(session_options),
+            key="attendance_session_detail",
+        )
+        selected_session = session_options[selected_session_label]
+        session_students = df[df['ts_group'] == selected_session].copy()
+        session_students["Status"] = session_students["is_present"].map(
+            {True: "✅ Present", False: "❌ Absent"}
+        )
+        st.dataframe(
+            session_students[["Student", "Status"]].sort_values("Student"),
+            width="stretch",
+            hide_index=True,
+        )
 
 
 def login_teacher(username, password):
