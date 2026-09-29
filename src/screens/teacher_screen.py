@@ -9,6 +9,7 @@ from src.Components.subject_card import subject_card
 from src.database.db import check_teacher_exists, create_teacher, teacher_login, get_teacher_subjects, get_attendance_for_teacher
 from src.Components.dialog_create_subject import create_subject_dialog
 from src.Components.dialog_share_subject import share_subject_dialog
+from src.Components.dialog_delete_subject import delete_subject_dialog
 from src.Components.dialog_add_photo import add_photos_dialog
 
 from src.pipelines.face_pipeline import predict_attendance
@@ -74,6 +75,7 @@ def teacher_dashboard():
     with tab3:
         type3 = "primary" if st.session_state.current_teacher_tab == 'attendance_records' else "tertiary"
         if st.button('Attendance Records',type=type3, width='stretch', icon=':material/cards_stack:'):
+            st.session_state['attendance_subject_filter'] = None
             st.session_state.current_teacher_tab = 'attendance_records'
             st.rerun()
 
@@ -226,13 +228,38 @@ def teacher_tab_manage_subjects():
                 subject_code=sub['subject_code'],
                 subject_id=sub['subject_id'],
             ):
-                if st.button(
-                    f"Share Code: {subject_name}",
-                    key=f"share_{subject_id}_{subject_code}",
-                    icon=":material/share:",
-                ):
-                    share_subject_dialog(subject_name, subject_code)
-                st.space()
+                view_column, share_column, delete_column = st.columns(3)
+                with view_column:
+                    if st.button(
+                        "View Attendance",
+                        key=f"view_attendance_{subject_id}",
+                        icon=":material/assignment:",
+                        width="stretch",
+                    ):
+                        st.session_state['attendance_subject_filter'] = subject_id
+                        st.session_state.current_teacher_tab = 'attendance_records'
+                        st.rerun()
+                with share_column:
+                    if st.button(
+                        f"Share: {subject_name}",
+                        key=f"share_{subject_id}_{subject_code}",
+                        icon=":material/share:",
+                        width="stretch",
+                    ):
+                        share_subject_dialog(subject_name, subject_code)
+                with delete_column:
+                    if st.button(
+                        "Delete",
+                        key=f"delete_subject_{subject_id}",
+                        icon=":material/delete_forever:",
+                        width="stretch",
+                    ):
+                        delete_subject_dialog(
+                            subject_id,
+                            subject_name,
+                            subject_code,
+                            st.session_state.teacher_data['teacher_id'],
+                        )
 
             subject_card(
                 name=sub['name'],
@@ -251,10 +278,12 @@ def teacher_tab_attendance_records():
     st.header('Attendance Records')
 
     teacher_id = st.session_state.teacher_data['teacher_id']
+    selected_subject_id = st.session_state.get('attendance_subject_filter')
 
     records = get_attendance_for_teacher(teacher_id)
 
     if not records:
+        st.info('No attendance records found for this subject.' if selected_subject_id else 'No attendance records found.')
         return
     
     data = []
@@ -267,6 +296,7 @@ def teacher_tab_attendance_records():
             "Time": datetime.fromisoformat(ts).strftime("%Y-%m-%d %I:%M %p") if ts else "N'A",
             "Subject": r['subjects']['name'],
             "Subject Code":r['subjects']['subject_code'],
+            "subject_id": r['subject_id'],
             "Student": r.get('students', {}).get('name', f"Student {r.get('student_id', '')}"),
             "is_present": bool(r.get('is_present', False))
         })
@@ -274,6 +304,17 @@ def teacher_tab_attendance_records():
 
     df = pd.DataFrame(data)
 
+    if selected_subject_id is not None:
+        df = df[df['subject_id'] == selected_subject_id]
+        if df.empty:
+            st.info('No attendance records found for this subject yet.')
+            return
+
+        selected_subject = df.iloc[0]
+        st.subheader(f"{selected_subject['Subject']} · {selected_subject['Subject Code']}")
+        if st.button('Show all subjects', key='show_all_attendance_subjects'):
+            st.session_state['attendance_subject_filter'] = None
+            st.rerun()
 
 
     summary = (
