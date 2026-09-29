@@ -40,6 +40,15 @@ def student_dashboard():
     student_data = st.session_state.student_data
     student_id = student_data["student_id"]
 
+    if st.button(
+        "Back to portals",
+        key="student_back_to_portals",
+        icon=":material/arrow_back:",
+        type="tertiary",
+    ):
+        st.session_state["login_type"] = None
+        st.rerun()
+
     # --------------------------------------------------------
     # Header
     # --------------------------------------------------------

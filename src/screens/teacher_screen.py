@@ -42,6 +42,16 @@ def teacher_screen():
 
 def teacher_dashboard():
     teacher_data = st.session_state.teacher_data
+
+    if st.button(
+        "Back to portals",
+        key="teacher_back_to_portals",
+        icon=":material/arrow_back:",
+        type="tertiary",
+    ):
+        st.session_state['login_type'] = None
+        st.rerun()
+
     c1, c2 = st.columns(2, vertical_alignment='center', gap='xxlarge')
     with c1:
         header_dashboard()
