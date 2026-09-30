@@ -159,7 +159,7 @@ def predict_attendance(class_image_np):
             distances[best_index]
         )
 
-        resemblance_threshold = 0.65
+        resemblance_threshold = 0.50
 
         print(
             f"Predicted ID: {predicted_id}, "
