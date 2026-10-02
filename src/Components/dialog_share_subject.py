@@ -4,8 +4,8 @@ import io
 
 @st.dialog("Share Class Link")
 def share_subject_dialog(subject_name, subject_code):
-    app_url = "https://attendx-main.streamlit.app"
-    join_url = f"{app_url}/?join-code={subject_code}"
+    base_url = "https://sushantyadav0i3it0-attendx-smart-attendence-by-ai-app-2dpxbe.streamlit.app"
+    join_url = f"{base_url}/?join-code={subject_code}"
 
     st.header("Scan to Join")
 
